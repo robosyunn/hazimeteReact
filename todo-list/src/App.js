@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react'
+import Form from './components/Form'
+import Todo from './components/Todo'
 
-function App() {
+const App = () => {
+  // todo = ["買い物する", "洗濯する", ...]
+  const [todos, setTodos] = useState([])
+
+  const addTodo = (value) => {
+    setTodos(todos.concat([value]))
+  }
+
+  const deleteTodo = (value) => {
+    setTodos(todos.filter(todo => todo !== value))
+  }
+  // [<Todo todo={"洗濯する"}, onClick={deleteTodo} /> , <Todo todo={"買い物"}, onClick={deleteTodo} />...]
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Form
+        onClick={addTodo}
+      />
+      {todos.map(todo => <Todo todo={todo} onClick={deleteTodo} />)}
     </div>
   );
 }
 
 export default App;
+
+
+
+//

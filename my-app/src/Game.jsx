@@ -3,13 +3,10 @@ import Board from './Board'
 import { calculateWinner } from './utils/index';
 
 const Game = () => {
-    const [history, setHistory] = React.useState(
-        [{ squares: Array(9).fill(null), }]
-    );
+    const [squares, setSquares] = React.useState(Array(9).fill(null))
     const [xIsNext, setXIsNext] = React.useState(true);
 
-    const current = history[history.length - 1];
-    const winner = calculateWinner(current.squares);
+    const winner = calculateWinner(squares);
     let status;
     if (winner) {
         status = `Winner: ${winner}`;
@@ -18,14 +15,12 @@ const Game = () => {
     }
 
     const handleClick = (i) => {
-        const currentSquares = current.squares.slice();
+        const currentSquares = squares.slice();
         if (calculateWinner(currentSquares) || currentSquares[i]) {
             return;
         }
         currentSquares[i] = xIsNext ? 'X' : 'O';
-        setHistory(history.concat([{
-            squares: currentSquares,
-        }]))
+        setSquares(currentSquares)
         setXIsNext(!xIsNext)
     }
 
@@ -33,7 +28,7 @@ const Game = () => {
         <div className="game">
             <div className="game-board">
                 <Board
-                    squares={current.squares}
+                    squares={squares}
                     onClick={(i) => handleClick(i)}
                 />
             </div>
